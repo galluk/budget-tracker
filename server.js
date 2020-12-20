@@ -17,7 +17,7 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-const databaseUrl = `mongodb+srv://mongoLG:${encodeURIComponent(process.env.DB_PASS)}@cluster0.xoyrx.mongodb.net/workout_db`;
+const databaseUrl = `mongodb+srv://mongoLG:${encodeURIComponent(process.env.DB_PASS)}@cluster0.xoyrx.mongodb.net/budgettracker_db`;
 
 mongoose.connect(
   process.env.MONGODB_URI || databaseUrl, 
