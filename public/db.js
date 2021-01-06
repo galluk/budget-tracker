@@ -21,32 +21,35 @@ request.onerror = function(event) {
   console.log('Error! ' + event.target.errorCode);
 };
 
+// save the record as a pending transaction
 function saveRecord(record) {
   console.log('saving to indexedDB');
   
   // create a transaction on the pending db with readwrite access
   const transaction = db.transaction(['pending'], 'readwrite');
 
-  // access your pending object store
+  // access the pending object store
   const store = transaction.objectStore('pending');
 
-  // add record to your store with add method.
+  // add record to the store
   store.add(record);
 }
 
+// called when the app is back online
 function checkDatabase() {
-  // open a transaction on your pending db
+  // open a transaction on the pending db
   const transaction = db.transaction(['pending'], 'readwrite');
-  // access your pending object store
+  // access the pending object store
   const store = transaction.objectStore('pending');
   // get all records from store and set to a variable
-  const getAll = store.getAll();
+  const allPending = store.getAll();
 
-  getAll.onsuccess = function() {
-    if (getAll.result.length > 0) {
+  // once all pending transactions have been retreived, post them to the DB
+  allPending.onsuccess = function() {
+    if (allPending.result.length > 0) {
       fetch('/api/transaction/bulk', {
         method: 'POST',
-        body: JSON.stringify(getAll.result),
+        body: JSON.stringify(allPending.result),
         headers: {
           Accept: 'application/json, text/plain, */*',
           'Content-Type': 'application/json'
@@ -54,13 +57,13 @@ function checkDatabase() {
       })
       .then(response => response.json())
       .then(() => {
-        // if successful, open a transaction on your pending db
+        // if successful, open a transaction on the pending db
         const transaction = db.transaction(['pending'], 'readwrite');
 
-        // access your pending object store
+        // access the pending object store
         const store = transaction.objectStore('pending');
 
-        // clear all items in your store
+        // clear all items in the store
         store.clear();
       });
     }
