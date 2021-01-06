@@ -4,7 +4,7 @@ Allow a user to track their budget online and offline.
 ## User Story
 
 <p>
-Given a frontend consisting of 1 html file and associated css and javascript files, the requirement was to provide backend functionality to allow a user to add income and expenses in a budget tracker in btoh online and offline mode. Any transactions entered when offline are to sync with the mongoDB when network functionality resumes.
+Given a frontend consisting of 1 html file and associated css and javascript files, the requirement was to provide backend functionality to allow a user to add income and expenses in a budget tracker in both online and offline mode. Any transactions entered when offline are to sync with the mongoDB when network functionality resumes.
 </p>
 
 ## Built With
